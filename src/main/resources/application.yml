@@ -2,9 +2,9 @@ server:
   port: 8082
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/insuranceProject
-    username: postgres
-    password: super
+    url: jdbc:postgresql://localhost:5432/ProgectInsurance
+    username:
+    password:
   jpa:
     database: POSTGRESQL
     show_sql: true
