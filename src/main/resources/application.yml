@@ -1,18 +1,10 @@
-server:
-  port: 8082
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/ProgectInsurance
-    username:
-    password:
+    url: jdbc:mysql://127.0.0.1:3306/project_insurance
+    username: root
+    password: dante123
   jpa:
-    database: POSTGRESQL
+    database: mysql
     show_sql: true
     hibernate:
-      ddl-auto: create-drop
-  output:
-    ansi:
-      enabled: ALWAYS
-  h2:
-    console:
-      enabled: true
+      ddl-auto: update
