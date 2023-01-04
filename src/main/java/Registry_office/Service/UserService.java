@@ -6,8 +6,10 @@ import Registry_office.Exceptions.NotFoundException;
 import Registry_office.Repository.UserRepository;
 import Registry_office.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,11 +38,10 @@ public class UserService {
         return ResponseEntity.ok(user);
     }
 
-
     public ResponseEntity<User> singleUser(long id) throws NotFoundException {
         Optional<User> findOnDb= userRepository.findById(id);
         if (findOnDb.isEmpty()){
-            throw new NotFoundException("user " + id + " not found");
+            throw new NotFoundException("user with id: " + id + ", not found");
         }
         return ResponseEntity.ok(findOnDb.get());
     }
@@ -49,7 +50,7 @@ public class UserService {
     public void deleteUser(long id) throws NotFoundException, GenericException {
         Optional<User> deleteUserFromDb= userRepository.findById(id);
         if (deleteUserFromDb.isEmpty()){
-            throw new NotFoundException("user " + id + " not found");
+            throw new NotFoundException("user with id: " + id + ", not found");
         }
         if (deleteUserFromDb.get().isDeleted()==false){
             deleteUserFromDb.get().setDeleted(true);
@@ -62,7 +63,7 @@ public class UserService {
 
     public ResponseEntity getUserWithEmail(String email) throws NotFoundException {
         Optional<User> getUserEmail= userRepository.findByEmail(email);
-        if (!getUserEmail.isPresent()) throw new NotFoundException("user " + email + " not found");
+        if (!getUserEmail.isPresent()) throw new NotFoundException("user with email: " + email + ", not found");
         return ResponseEntity.ok().body(getUserEmail.get());
     }
 }

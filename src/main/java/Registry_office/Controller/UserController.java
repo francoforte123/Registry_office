@@ -6,6 +6,7 @@ import Registry_office.Exceptions.NotFoundException;
 import Registry_office.Service.UserService;
 import Registry_office.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

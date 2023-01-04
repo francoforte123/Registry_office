@@ -1,7 +1,18 @@
 package Registry_office.Exceptions;
 
-public class AlreadyRegisteredException extends Throwable {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-    public AlreadyRegisteredException(String already_registered_user) {
+@ResponseStatus(code = HttpStatus.OK)
+public class AlreadyRegisteredException extends RuntimeException {
+
+    private String message;
+
+    public AlreadyRegisteredException(String msg) {
+        super(msg);
+        this.message= msg;
+    }
+
+    public AlreadyRegisteredException() {
     }
 }

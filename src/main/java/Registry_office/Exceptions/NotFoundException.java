@@ -1,7 +1,18 @@
 package Registry_office.Exceptions;
 
-public class NotFoundException extends Throwable {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-    public NotFoundException(String s) {
+@ResponseStatus(code = HttpStatus.OK)
+public class NotFoundException extends RuntimeException {
+
+    private String message;
+
+    public NotFoundException(String smg) {
+        super(smg);
+        this.message=smg;
+    }
+
+    public NotFoundException() {
     }
 }
