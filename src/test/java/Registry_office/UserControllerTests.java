@@ -88,16 +88,12 @@ class UserControllerTests {
 
 	@Test
 	public void findUserWithEmail(){
-		System.out.println("creo l'utente");
 		createTheUser1();
 		createTheUser2();
 
 		String emailTheUser= "anna.neri@gmail.com";
 
 		Optional<User> getUserWithEmail= userRepository.findByEmail(emailTheUser);
-		System.out.println("faccio il confronto");
 		Assertions.assertEquals(getUserWithEmail.get().getEmail(), emailTheUser);
-
-		System.out.println(getUserWithEmail);
 	}
 }
