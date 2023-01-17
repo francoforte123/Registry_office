@@ -1,5 +1,5 @@
 package Registry_office;
-/*
+
 import Registry_office.Repository.UserRepository;
 import Registry_office.User.User;
 import org.junit.jupiter.api.Assertions;
@@ -21,6 +21,7 @@ class UserControllerTests {
 	@Test
 	public void createTheUser1(){
 		User user = new User();
+		user.setId(1);
 		user.setName("Anna");
 		user.setSurname("Neri");
 		user.setBirthday(new Date(02 / 02 / 1990));
@@ -37,6 +38,7 @@ class UserControllerTests {
 	@Test
 	public void createTheUser2(){
 		User user = new User();
+		user.setId(2);
 		user.setName("Marco");
 		user.setSurname("Verdi");
 		user.setBirthday(new Date(02 / 02 / 1990));
@@ -97,4 +99,3 @@ class UserControllerTests {
 		Assertions.assertEquals(getUserWithEmail.get().getEmail(), emailTheUser);
 	}
 }
-*/

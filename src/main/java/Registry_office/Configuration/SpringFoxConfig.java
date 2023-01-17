@@ -1,5 +1,5 @@
 package Registry_office.Configuration;
-/*
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +28,7 @@ public class SpringFoxConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("Registry_office"))
+                .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build().apiInfo(new ApiInfo(
                         "Swagger Exercise",
@@ -75,4 +75,4 @@ public class SpringFoxConfig {
             }
         };
     }
-}*/
+}
