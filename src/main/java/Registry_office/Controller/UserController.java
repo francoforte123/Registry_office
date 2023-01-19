@@ -40,4 +40,9 @@ public class UserController {
     public ResponseEntity getUserByEmail(@RequestParam String email) throws NotFoundException {
         return userService.getUserWithEmail(email);
     }
+
+    @GetMapping("/getUserIfExixstByEmail/email")
+    public ResponseEntity verifyTheUser(@RequestParam String email) throws NotFoundException{
+        return userService.verifyIfUserExistByEmail(email);
+    }
 }

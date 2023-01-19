@@ -21,7 +21,7 @@ public class UserService {
 
 
     public List<User> getAllUsers(){
-        List<User> userOptional= userRepository.findAll();
+        List<User> userOptional= userRepository.findAllUsers();
         if (userOptional.isEmpty()) ResponseEntity.status(500).build();
         return ResponseEntity.ok(userOptional).getBody();
     }
@@ -37,7 +37,7 @@ public class UserService {
     }
 
     public ResponseEntity<User> singleUser(long id) throws NotFoundException {
-        Optional<User> findOnDb= userRepository.findById(id);
+        Optional<User> findOnDb= userRepository.getById(id);
         if (findOnDb.isEmpty()){
             throw new NotFoundException("user with id: " + id + ", not found");
         }
@@ -46,7 +46,7 @@ public class UserService {
 
 
     public void deleteUser(long id) throws NotFoundException, GenericException {
-        Optional<User> deleteUserFromDb= userRepository.findById(id);
+        Optional<User> deleteUserFromDb= userRepository.getById(id);
         if (deleteUserFromDb.isEmpty()){
             throw new NotFoundException("user with id: " + id + ", not found");
         }
@@ -63,5 +63,12 @@ public class UserService {
         Optional<User> getUserEmail= userRepository.findByEmail(email);
         if (!getUserEmail.isPresent()) throw new NotFoundException("user with email: " + email + ", not found");
         return ResponseEntity.ok().body(getUserEmail.get());
+    }
+
+
+    public ResponseEntity verifyIfUserExistByEmail(String email) throws NotFoundException{
+        Optional<User> getUser= userRepository.findIfExistTheUserByEmail(email);
+        if (!getUser.isPresent()) throw new NotFoundException("the user by email not found");
+        return ResponseEntity.ok().body(getUser.get());
     }
 }
