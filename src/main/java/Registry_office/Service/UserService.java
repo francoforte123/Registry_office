@@ -6,6 +6,7 @@ import Registry_office.Exceptions.NotFoundException;
 import Registry_office.Repository.UserRepository;
 import Registry_office.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -23,25 +24,26 @@ public class UserService {
     public List<User> getAllUsers(){
         List<User> userOptional= userRepository.findAllUsers();
         if (userOptional.isEmpty()) ResponseEntity.status(500).build();
-        return ResponseEntity.ok(userOptional).getBody();
+        return userOptional;
     }
 
 
-    public ResponseEntity<User> createdNewUser(User user) throws AlreadyRegisteredException {
-        Optional<User> newUser= userRepository.findByEmail(user.getEmail());
-        if (newUser.isPresent()){
-            throw new AlreadyRegisteredException("already registered user");
-        }
-        userRepository.save(user);
-        return ResponseEntity.ok(user);
+    public User createdNewUser(User user) throws AlreadyRegisteredException {
+       User user1;
+       try {
+            user1= userRepository.save(user);
+       }catch (DataAccessException dataAccessException){
+            throw new AlreadyRegisteredException("the user is create");
+       }
+       return user1;
     }
 
-    public ResponseEntity<User> singleUser(long id) throws NotFoundException {
+    public User singleUser(long id) throws NotFoundException {
         Optional<User> findOnDb= userRepository.getById(id);
         if (findOnDb.isEmpty()){
             throw new NotFoundException("user with id: " + id + ", not found");
         }
-        return ResponseEntity.ok(findOnDb.get());
+        return findOnDb.get();
     }
 
 
@@ -59,16 +61,23 @@ public class UserService {
     }
 
 
-    public ResponseEntity getUserWithEmail(String email) throws NotFoundException {
+    public User getUserWithEmail(String email) throws NotFoundException {
         Optional<User> getUserEmail= userRepository.findByEmail(email);
         if (!getUserEmail.isPresent()) throw new NotFoundException("user with email: " + email + ", not found");
-        return ResponseEntity.ok().body(getUserEmail.get());
+        return getUserEmail.get();
     }
 
 
-    public ResponseEntity verifyIfUserExistByEmail(String email) throws NotFoundException{
+    public User verifyIfUserExistByEmail(String email) throws NotFoundException{
         Optional<User> getUser= userRepository.findIfExistTheUserByEmail(email);
         if (!getUser.isPresent()) throw new NotFoundException("the user by email not found");
-        return ResponseEntity.ok().body(getUser.get());
+        return getUser.get();
+    }
+
+
+    public List<User> getUsersDeleted(){
+        List<User> userList= userRepository.getAllUsersDeteled();
+        if (userList.isEmpty()) throw new NotFoundException("the users not found");
+        return userList;
     }
 }

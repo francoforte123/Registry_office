@@ -22,4 +22,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "select * from users where email= ? and is_deleted= true", nativeQuery = true)
     Optional<User> findIfExistTheUserByEmail(String email);
+
+    @Query(value = "select * from users where is_deleted= true", nativeQuery = true)
+    List<User> getAllUsersDeteled();
 }
+//creare se fosse possibile i test per le ultime due funzioni create
